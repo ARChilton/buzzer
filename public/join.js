@@ -7,7 +7,11 @@ const joinedInfo = document.querySelector('.js-joined-info')
 const editInfo = document.querySelector('.js-edit')
 
 let user = {}
-
+socket.on('buzzes', (buzzes) => {
+  if (buzzes.length === 0) {
+    buzzer.disabled = false
+  }
+})
 const getUserInfo = () => {
   user = JSON.parse(localStorage.getItem('user')) || {}
   if (user.name) {
@@ -36,6 +40,7 @@ form.addEventListener('submit', (e) => {
 
 buzzer.addEventListener('click', (e) => {
   socket.emit('buzz', user)
+  buzzer.disabled = true
 })
 
 editInfo.addEventListener('click', () => {
